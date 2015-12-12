@@ -1,0 +1,15 @@
+
+ja:
+  activerecord:
+    attributes:
+      team:
+        name: 'チーム名'
+        description: '説明'
+        team/members:
+          name: '名前'
+          age: '年齢'
+          mail: 'メール'          
+      member:
+        name: '名前'
+        age: '年齢'
+        mail: 'メール'

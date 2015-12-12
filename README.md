@@ -102,3 +102,5 @@ See
 Rails ネストした関連先のテーブルもまとめて保存する (accepts_nested_attributes_for、fields_for)
 * http://qiita.com/shizuma/items/5bfcf6c1e855b959e135
 Rails 複数の子レコードの作成・更新を自在に扱う (accepts_nested_attributes_for)
+* https://www.tamurasouko.com/?p=1595
+Rails – 親子テーブルを一度に更新する方法

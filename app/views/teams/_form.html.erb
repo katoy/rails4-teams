@@ -1,23 +1,30 @@
 
 <h2>チームの作成</h2>
 <%= form_for @team do |f| %>
-  <%= f.text_field :name,       placeholder: 'チーム名を入力して下さい', cols: '30', rows: '10', autofocus: 'true', required: true %><br>
-  <%= f.text_area :description, placeholder: 'チーム紹介をして下さい',   autofocus: 'true', required: true %><br>
-  メンバー
-  <div id='team_members_box'>
-    <%= f.fields_for :members do |m| %>
-      <%= m.index %>:
-      <%= m.text_field :name, placeholder: 'メンバーの名前を入力して下さい', required: true %>
-      <%= m.text_field :age,  placeholder: 'メンバーの年齢を入力して下さい', required: true %>
-      <%= m.text_field :mail, placeholder: 'メンバーのメールアドレスを入力して下さい', required: true %>
-      <%= m.check_box:_destroy %>削除<br>
-    <% end %>
-    <%= button_tag type: 'button', id: 'add_item_button', class: 'js-team_member' do %>
+  <div class='form-group'>
+    <%= f.label :name, class: 'control-label col-sm-2' %>
+    <%= f.text_field :name,       placeholder: 'チーム名を入力して下さい', cols: '30', rows: '10', autofocus: 'true', required: true %><br>
+    <%= f.label :description, class: 'control-label col-sm-2' %>
+    <%= f.text_area :description, placeholder: 'チーム紹介をして下さい',   autofocus: 'true', required: true %><br>
+    メンバー
+    <div id='team_members_box'>
+      <%= f.fields_for :members do |m| %>
+        <%= m.index + 1%>:
+        <%= m.label :name %>
+        <%= m.text_field :name, placeholder: 'メンバーの名前を入力して下さい', required: true %>
+        <%= m.label :age %>
+        <%= m.text_field :age,  placeholder: 'メンバーの年齢を入力して下さい', required: true %>
+        <%= m.label :mail %>
+        <%= m.text_field :mail, placeholder: 'メンバーのメールアドレスを入力して下さい', required: true %>
+        <%= m.check_box:_destroy %>削除<br>
+      <% end %>
+      <%= button_tag type: 'button', id: 'add_item_button', class: 'js-team_member' do %>
       追加
     <% end %><br>
-  </div>
-  <br>
+    </div>
+    <br>
   <%= f.submit '保存する' %>
+  </div>
 <% end %>
 <br>
-<div><%= link_to '一覧に戻る', root_path %><div>
+<div><%= link_to '一覧に戻る', root_path %></div>

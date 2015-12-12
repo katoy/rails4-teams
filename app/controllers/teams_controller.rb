@@ -25,8 +25,14 @@ class TeamsController < ApplicationController
   def create
     # Team.create!(team_params)
     team = Team.new(team_params)
-    team.save!(validate: false)
-    redirect_to root_path
+    #team.save!(validate: false)
+    #redirect_to root_path
+    if team.save
+     flash[:success] = "登録しました"
+     redirect_to root_path
+   else
+     render 'new'
+   end
   end
 
   def edit

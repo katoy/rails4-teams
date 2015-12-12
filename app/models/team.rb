@@ -4,4 +4,5 @@ class Team < ActiveRecord::Base
   accepts_nested_attributes_for :members, allow_destroy: true
 
   validates :members, presence: true
+  validates :name, presence: true
 end
