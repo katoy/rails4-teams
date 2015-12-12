@@ -1,0 +1,10 @@
+
+<%- @teams.each do |team| -%>
+  <div>
+    * <%= link_to team.name, team_path(team) %>
+    [<%= truncate(team.description, length: 10) %>]
+    <%= team.members.size %> 人
+<%- end -%>
+<br><br>
+<div><%= link_to '詳細一覧', teams_list_path %></div>
+<div><%= link_to 'チームを作成する', new_team_path %></div>
