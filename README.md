@@ -1,4 +1,8 @@
 
+[![Build Status](https://travis-ci.org/katoy/rails4-teams.png?branch=master)](https://travis-ci.org/katoy/rails4-teams)
+[![Dependency Status](https://gemnasium.com/katoy/rails4-teams.png)](https://gemnasium.com/katoy/rails4-teams)
+
+
 準備
 =====
     $ rails new teams -t
