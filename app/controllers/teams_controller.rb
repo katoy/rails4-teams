@@ -43,8 +43,9 @@ class TeamsController < ApplicationController
 
   def destroy
     team = Team.find(params[:id])
-    team.members.destroy_all
-    team.delete
+    # dependent: :destroyを model で設定するので destroy_all は不要
+    # team.members.destroy_all
+    team.destroy
     redirect_to root_path
   end
 

@@ -10,13 +10,17 @@
 Team.delete_all
 Member.delete_all
 
+# team = Team.new(name: 'Team A', description: 'In China')
+# team.save!
+# team.members.create!(name: 'Abe', age: 30, mail: 'abe@example.com')
+# team.members.create!(name: 'Inoue', age: 40, mail: 'inoue@example.com')
+
 team = Team.new(name: 'Team A', description: 'In China')
-team.save!
-team.members.build(name: 'Abe', age: 30, mail: 'abe@example.com')
-team.members.build(name: 'Inoue', age: 40, mail: 'inoue@example.com')
-team.save!
+team.save!(validate: false)
+team.members.create!(name: 'Abe', age: 30, mail: 'abe@example.com')
+team.members.create!(name: 'Inoue', age: 40, mail: 'inoue@example.com')
 
 team = Team.new(name: 'Team B', description: 'In Tokyo, japan')
-team.save!
+team.save!(validate: false)
 team.members.build(name: 'Kato', age: 30, mail: 'kato@example.com')
 team.save!

@@ -15,10 +15,9 @@ db/migrates 以下を編集して team, member の DB 構造を記載する。
 
 team 1: <-> n: member の１対ｎの関係も db/migrate/*, app/models/* で設定する。
 
-// 未設定  
-// また、  
-//　　チームは必ず１人以上のメンバーが属している事  
-// を validator で設定する。  
+また、  
+　　チームは必ず１人以上のメンバーが属している事  
+を validator で設定する。  
 
 db/seed.rb で次の関係のデータを設定する。
 
@@ -95,6 +94,10 @@ views/* を作成する。
 
 app/assets/javascripts/teams.coffee を作成する。
 
+# スクリーンショット
+
+* 001 ![001](screenshots/001.png)
+* 002 ![002](screenshots/002.png)
 
 See
 ===

@@ -1,5 +1,18 @@
 
 ja:
+  label:
+    team: 'チーム名'
+    description: '詳細'
+    member: 'メンバー'
+    name: '名前'
+    age: '年齢'
+    mail: 'メール'
+    create_team: 'チームを作成する'
+    edit_team: 'チームを編集する'
+    back_to_index: '一覧に戻る'
+    add: '追加'
+    save: '保存する'
+    delete: '削除'
   activerecord:
     attributes:
       team:
@@ -8,7 +21,7 @@ ja:
         team/members:
           name: '名前'
           age: '年齢'
-          mail: 'メール'          
+          mail: 'メール'
       member:
         name: '名前'
         age: '年齢'
