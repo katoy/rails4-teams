@@ -1,29 +1,29 @@
-<table border="1">
-  <tr>
-    <th>チーム名</th><th colspan="4">詳細</th>
-  </tr>
-<%- @teams.each do |team| -%>
-  <tr>
-  　<td><%= link_to team.name, team_path(team) %></td>
-    <td colspan="4"><%= team.description %></td>
-  </tr>
-  <tr>
-    <td></td>
-    <tr><th></th><th>No</th><th>名前</th><th>年齢</th><th>メール</th><tr>
-    <%- team.members.each_with_index do |m, idx| -%>
-      <tr>
-      <td></td>
-      <td><%= idx %></td>
-      <td><%= m.name %></td>
-      <td><%= m.age %></td>
-      <td><%= m.mail %></td>
-      <tr>
-      <%- end %>
-    </td>
-  </tr>
-<%- end -%>
-</table>
+<% if @teams.count == 0 %>
 
-<div>
-  <%= link_to 'チームを作成する', new_team_path %>
-</div>
+<% else %>
+  <table class="col-sm-12 table table-hover table-condensed table-striped table-bordered">
+    <tr>
+      <th>チーム名</th><th colspan="4">詳細</th>
+    </tr>
+    <%- @teams.each do |team| -%>
+      <tr>
+  　     <td><%= link_to team.name, team_path(team) %></td>
+        <td colspan="4"><%= team.description %></td>
+      </tr>
+      <tr>
+        <th></th><th>No</th><th>名前</th><th>年齢</th><th>メール</th>
+      </tr>
+      <%- team.members.each_with_index do |m, idx| -%>
+        <tr>
+          <td></td>
+          <td><%= idx + 1 %></td>
+          <td><%= m.name %></td>
+          <td><%= m.age %></td>
+          <td><%= m.mail %></td>
+        </tr>
+      <%- end %>
+    <%- end -%>
+  </table>
+<% end %>
+<div><%= link_to 'チームを作成する', new_team_path %></div>
+<div><%= link_to '一覧に戻る', root_path %></div>

@@ -1,11 +1,20 @@
+<% if @teams.nil? || @teams.count == 0%>
 
-<%- @teams.each do |team| -%>
-  <div>
-    * <%= link_to team.name, team_path(team) %>
-    [<%= truncate(team.description, length: 10) %>]
-    <%= team.members.size %> 人
-  </div>
-<%- end -%>
+<% else %>
+  <table class="col-sm-12 table table-hover table-condensed table-striped table-bordered">
+    <tr>
+      <th class="col-sm-4">チーム名</th><th class="col-sm-6">詳細</th><th class="col-sm">メンバー</th><th class="col-sm"></th>
+    </tr>
+  <%- @teams.each do |team| -%>
+    <tr>
+      <td><%= link_to team.name, team_path(team) %></td>
+      <td><%= truncate(team.description, length: 30) %></td>
+      <td><%= team.members.size %> 人</td>
+      <td><%= link_to '削除', team_path(team.id), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <%- end -%>
+</table>
 <br><br>
+<% end %>
 <div><%= link_to '詳細一覧', teams_list_path %></div>
 <div><%= link_to 'チームを作成する', new_team_path %></div>

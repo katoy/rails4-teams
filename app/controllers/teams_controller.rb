@@ -23,16 +23,9 @@ class TeamsController < ApplicationController
   end
 
   def create
-    # Team.create!(team_params)
-    team = Team.new(team_params)
-    #team.save!(validate: false)
-    #redirect_to root_path
-    if team.save
-     flash[:success] = "登録しました"
-     redirect_to root_path
-   else
-     render 'new'
-   end
+    # binding.pry
+    Team.create(team_params)
+    redirect_to root_path
   end
 
   def edit
@@ -42,7 +35,7 @@ class TeamsController < ApplicationController
   def update
     @team = Team.find(params[:id])
     if @team.update!(update_team_params)
-      redirect_to root_path
+      redirect_to edit # root_path
     else
       render :edit
     end
@@ -50,6 +43,7 @@ class TeamsController < ApplicationController
 
   def destroy
     team = Team.find(params[:id])
+    team.members.destroy_all
     team.delete
     redirect_to root_path
   end

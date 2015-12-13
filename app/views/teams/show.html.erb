@@ -1,14 +1,23 @@
 <div>　チーム名: <%= @team.name %> </div>
 <div>チーム詳細: <%= @team.description %> </div>
-<br>
-<div>メンバー一覧</div>
+<div>メンバー</div>
 <div>
-<%- @members.each do |member| -%>
-　　名前: <%= member.name %><br>
-　　年齢: <%= member.age %><br>
-　メール: <%= member.mail %><br>
-  <br>
-<%- end -%>
+  <table class="table table-hover table-condensed table-striped table-bordered">
+    <tr>
+      <th class="col-sm-1">No.</th>
+      <th class="col-sm-2">名前</th>
+      <th class="col-sm-1">年齢</th>
+      <th class="col-sm-6">メール</th>
+    </tr>
+    <%- @members.each_with_index do |member, idx| -%>
+      <tr>
+        <td class="text-right col-sm"><%= idx + 1 %></td>
+        <td><%= member.name %></td>
+        <td class="text-right col-sm"><%= member.age %></td>
+        <td><%= member.mail %></td>
+      </tr>
+  <%- end -%>
+  </table>
 </div>
 <div><%= link_to 'チームを編集する', edit_team_path(@team) %></div>
 <div><%= link_to '一覧に戻る', root_path %></div>

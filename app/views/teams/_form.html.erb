@@ -1,28 +1,47 @@
 
 <h2>チームの作成</h2>
 <%= form_for @team do |f| %>
-  <div class='form-group'>
+  <div class="form-group form-group-sm">
     <%= f.label :name, class: 'control-label col-sm-2' %>
-    <%= f.text_field :name,       placeholder: 'チーム名を入力して下さい', cols: '30', rows: '10', autofocus: 'true', required: true %><br>
-    <%= f.label :description, class: 'control-label col-sm-2' %>
-    <%= f.text_area :description, placeholder: 'チーム紹介をして下さい',   autofocus: 'true', required: true %><br>
-    メンバー
-    <div id='team_members_box'>
-      <%= f.fields_for :members do |m| %>
-        <%= m.index + 1%>:
-        <%= m.label :name %>
-        <%= m.text_field :name, placeholder: 'メンバーの名前を入力して下さい', required: true %>
-        <%= m.label :age %>
-        <%= m.text_field :age,  placeholder: 'メンバーの年齢を入力して下さい', required: true %>
-        <%= m.label :mail %>
-        <%= m.text_field :mail, placeholder: 'メンバーのメールアドレスを入力して下さい', required: true %>
-        <%= m.check_box:_destroy %>削除<br>
-      <% end %>
-      <%= button_tag type: 'button', id: 'add_item_button', class: 'js-team_member' do %>
-      追加
-    <% end %><br>
+    <div class="col-sm-10">
+      <%= f.text_field :name,    placeholder: 'チーム名を入力', autofocus: 'true', required: true, class: 'form-control' %>
     </div>
-    <br>
+  </div>
+  <div class="form-group form-group-sm">
+    <%= f.label :description, class: 'control-label col-sm-2' %>
+    <div class="col-sm-10">
+      <%= f.text_area :description, placeholder: 'チーム紹介', autofocus: 'true', required: true, class: 'form-control' %>
+    </div>
+  </div>
+  <div class='form-group form-group-sm''>
+    <label class='control-label col-sm-2' %>メンバー</label>
+    <div id='team_members_box' class='control-label col-sm-10'>
+      <table id="members-table" class="col-sm-12 table table-hover table-condensed table-striped table-bordered">
+        <%= f.fields_for :members do |m| %>
+          <% if m.index == 0 %>
+            <tr>
+              <th class="control-label col-sm">No.</th>
+              <th><%= m.label :name, class: 'control-label col-sm'%></th>
+              <th><%= m.label :age,  class: 'control-label col-sm'%></th>
+              <th><%= m.label :mail, class: 'control-label col-sm'%></th>
+              <th class="control-label col-sm"></th>
+            </tr>
+          <% end %>
+          <tr>
+            <td class="js-team_member" id="add_member_#{m.index}"><%= m.index + 1%></td>
+            <td><%= m.text_field :name, placeholder: '名前', required: true, class: 'form-control input-sm' %></td>
+            <td><%= m.text_field :age,  placeholder: '年齢', required: true, class: 'form-control input-sm' %></td>
+            <td><%= m.text_field :mail, placeholder: 'foo@example.com', required: true, class: 'form-control input-sm' %></td>
+            <td><%= m.check_box:_destroy %>削除</td>
+          </tr>
+        <% end %>
+      </table>
+      <div>
+        <%= button_tag type: 'button', id: 'add_item_button' do %>
+        追加
+      </div>
+    </div>
+  <% end %><br>
   <%= f.submit '保存する' %>
   </div>
 <% end %>
