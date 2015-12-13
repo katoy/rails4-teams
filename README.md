@@ -141,3 +141,5 @@ Rails 複数の子レコードの作成・更新を自在に扱う (accepts_nest
 Rails – 親子テーブルを一度に更新する方法
 * http://ruby-rails.hatenadiary.com/entry/20141208/1418018874
 Railsでaccepts_nested_attributes_forとfields_forを使ってhas_many関連の子レコードを作成/更新するフォームを作成
+* http://ruby-rails.hatenadiary.com/entry/20141207/1417926599
+Rails4でポリモフィックのリレーションを実装する
