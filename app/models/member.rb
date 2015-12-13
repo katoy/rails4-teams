@@ -4,7 +4,7 @@ class Member < ActiveRecord::Base
 
   default_scope -> { order(created_at: :asc) }
 
-  validates :team_id, presence: true
+  # validates :team_id, presence: true
   validates :name, presence: true
   validates :age, presence: true
   validates :mail, presence: true

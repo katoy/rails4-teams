@@ -23,7 +23,6 @@ class TeamsController < ApplicationController
   end
 
   def create
-    # binding.pry
     Team.create(team_params)
     redirect_to root_path
   end
@@ -33,10 +32,16 @@ class TeamsController < ApplicationController
   end
 
   def update
-    @team = Team.find(params[:id])
-    if @team.update!(update_team_params)
-      redirect_to edit # root_path
-    else
+    begin
+      @team = Team.find(params[:id])
+      if @team.update!(update_team_params)
+        redirect_to edit # root_path
+      else
+
+        render :edit
+      end
+    rescue => ex
+      flash.now[:notice] = ex.to_s
       render :edit
     end
   end

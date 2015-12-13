@@ -98,10 +98,38 @@ views/* を作成する。
 
 app/assets/javascripts/teams.coffee を作成する。
 
+チームを編集する際には、次のようなparamsがコントローラに渡ってくる。
+
+```json
+{"utf8"=>"✓",
+ "_method"=>"patch",
+ "authenticity_token"=>"tKW3fTDfPhvhYWr6Fke/SnxBD29d8ql6oNRtZoTFQIR3FvzK7FSL4f/lpbKh5mfxRtiPSDAxQpyq8rgYR3xi6A==",
+ "team"=>
+  {"name"=>"Team A",
+   "description"=>"In China",
+   "members_attributes"=>
+    {"0"=>{"name"=>"Abe", "age"=>"30", "mail"=>"abe@example.com", "_destroy"=>"1", "id"=>"1"},
+     "1"=>{"name"=>"Inoue", "age"=>"40", "mail"=>"inoue@example.com", "_destroy"=>"1", "id"=>"2"},
+     "2"=>{"name"=>"zzz", "age"=>"33", "mail"=>"33@com", "_destroy"=>"0", "id"=>"4"},
+     "3"=>{"name"=>"yyy", "age"=>"22", "mail"=>"22@com"}}},
+ "commit"=>"保存する",
+ "controller"=>"teams",
+ "action"=>"update",
+ "id"=>"1"}
+```
+
+削除するメンバーは _destroy => 1 となる。
+
+既存のメンバーの編集なら、 id => ”４” のように member の id が設定される。
+
+新規のメンバーは、id は設定されていない。
+
+
 # スクリーンショット
 
 * 001 ![001](screenshots/001.png)
 * 002 ![002](screenshots/002.png)
+* 003 ![003](screenshots/003.png)
 
 See
 ===
@@ -111,3 +139,5 @@ Rails ネストした関連先のテーブルもまとめて保存する (accept
 Rails 複数の子レコードの作成・更新を自在に扱う (accepts_nested_attributes_for)
 * https://www.tamurasouko.com/?p=1595
 Rails – 親子テーブルを一度に更新する方法
+* http://ruby-rails.hatenadiary.com/entry/20141208/1418018874
+Railsでaccepts_nested_attributes_forとfields_forを使ってhas_many関連の子レコードを作成/更新するフォームを作成

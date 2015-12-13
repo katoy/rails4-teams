@@ -22,8 +22,8 @@ RSpec.describe Member, :type => :model do
     expect(@member.valid?).to eq(true)
   end
 
-  it 'team_id should be present' do
-    @member.team_id = nil
-    expect(@member.valid?).to eq(false)
-  end
+  # it 'team_id should be present' do
+  #   @member.team_id = nil
+  #   expect(@member.valid?).to eq(false)
+  # end
 end
