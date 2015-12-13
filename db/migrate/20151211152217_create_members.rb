@@ -9,6 +9,6 @@ class CreateMembers < ActiveRecord::Migration
       t.timestamps null: false
     end
     add_index :members, [:team_id, :created_at]
-    add_index :members, :email, unique: true
+    add_index :members, :mail, unique: true
   end
 end

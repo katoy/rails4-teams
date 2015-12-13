@@ -22,11 +22,16 @@ ActiveRecord::Schema.define(version: 20151211152217) do
     t.datetime "updated_at", null: false
   end
 
+  add_index "members", ["mail"], name: "index_members_on_mail", unique: true
+  add_index "members", ["team_id", "created_at"], name: "index_members_on_team_id_and_created_at"
+
   create_table "teams", force: :cascade do |t|
     t.string   "name",        null: false
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  add_index "teams", ["name", "created_at"], name: "index_teams_on_name_and_created_at", unique: true
 
 end
