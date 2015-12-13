@@ -6,6 +6,6 @@ class CreateTeams < ActiveRecord::Migration
       t.text :description
       t.timestamps null: false
     end
-    add_index :users, [:name, :created_at], unique: true
+    add_index :teams, [:name, :created_at], unique: true
   end
 end
