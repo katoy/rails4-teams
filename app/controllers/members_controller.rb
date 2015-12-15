@@ -14,7 +14,7 @@ class MembersController < ApplicationController
  def create
    @member = @target.members.new(member_params)
    if @member.save
-     redirect_to @target, notice: "コメントしました"
+     redirect_to @target, notice: "作成しました"
    else
      render :new
    end
@@ -25,7 +25,6 @@ class MembersController < ApplicationController
    # ex: /staffs/:id/members
    # ex: /developers/:id/members
    def load_target
-     binding.pry
      resource, id = request.path.split('/')[1, 2]
      @target = resource.singularize.classify.constantize.find(id)
    end
@@ -37,7 +36,6 @@ class MembersController < ApplicationController
    # end
 
    def member_params
-     bindng.pry
      params.require(:name, :age, :mail)
    end
 end

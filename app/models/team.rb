@@ -12,4 +12,14 @@ class Team < ActiveRecord::Base
   # def count_members_more_than_one
   #   errors.add(:members, 'no member!') if members.size == 0
   # end
+
+  # def attributes=(attributes = {})
+  #  self.target_type = attributes[:target_type]
+  #  super
+  # end
+
+  # def target_attributes=(attributes)
+  #  self.target = target_type.constantize.create_with(attributes).find_or_initialize_by(id: attributes['id'])
+  #  target.attributes = attributes.slice(*%w(content)) if target.id
+  # end
 end

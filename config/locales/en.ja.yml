@@ -26,3 +26,9 @@ ja:
         name: '名前'
         age: '年齢'
         mail: 'メール'
+
+  enumerize:
+    member:
+      target_type:
+        Staff: 'スタッフ'
+        Development: '研究開発'

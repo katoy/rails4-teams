@@ -11,12 +11,17 @@
         <td colspan="4"><%= team.description %></td>
       </tr>
       <tr>
-        <th></th><th>No</th><th>名前</th><th>年齢</th><th>メール</th>
+        <th></th><th>No</th><th>職種</th><th>名前</th><th>年齢</th><th>メール</th>
       </tr>
       <%- team.members.each_with_index do |m, idx| -%>
         <tr>
+          <% opt = ''
+             opt = m.target.lang  if m.target_type == 'Developer'
+             opt = m.target.skill if m.target_type == 'Staff'
+          %>
           <td></td>
           <td><%= idx + 1 %></td>
+          <td><%= m.target_type_text %> (<%= opt %>)</td>
           <td><%= m.name %></td>
           <td><%= m.age %></td>
           <td><%= m.mail %></td>

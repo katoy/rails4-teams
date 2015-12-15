@@ -5,13 +5,19 @@
   <table class="table table-hover table-condensed table-striped table-bordered">
     <tr>
       <th class="col-sm-1 text-nowrap">No.</th>
+      <th class="col-sm-2 text-nowrap">職種</th>
       <th class="col-sm-2 text-nowrap">名前</th>
       <th class="col-sm-1 text-nowrap">年齢</th>
-      <th class="col-sm-6 text-nowrap">メール</th>
+      <th class="col-sm-4 text-nowrap">メール</th>
     </tr>
     <%- @members.each_with_index do |member, idx| -%>
       <tr>
+        <% opt = ''
+           opt = member.target.lang  if member.target_type == 'Developer'
+           opt = member.target.skill if member.target_type == 'Staff'
+        %>
         <td class="text-right col-sm"><%= idx + 1 %></td>
+        <td><%= member.target_type_text %> (<%= opt %>)</td>
         <td><%= member.name %></td>
         <td class="text-right col-sm"><%= member.age %></td>
         <td><%= member.mail %></td>

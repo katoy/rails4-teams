@@ -32,18 +32,16 @@ class TeamsController < ApplicationController
   end
 
   def update
-    begin
-      @team = Team.find(params[:id])
-      if @team.update!(update_team_params)
-        redirect_to edit # root_path
-      else
+    @team = Team.find(params[:id])
+    if @team.update!(update_team_params)
+      redirect_to edit # root_path
+    else
 
-        render :edit
-      end
-    rescue => ex
-      flash.now[:notice] = ex.to_s
       render :edit
     end
+  rescue => ex
+    flash.now[:notice] = ex.to_s
+    render :edit
   end
 
   def destroy
@@ -62,8 +60,28 @@ class TeamsController < ApplicationController
     )
   end
 
+  # See http://blog.interfirm.co.jp/entry/2014/07/30/200431
+  # def team_params
+  #  params.require(:team).permit(
+  #    :name, :description,
+  #    members_attributes: [
+  #      :target_type,
+  #      target_attributes: [:name, :age, :mail]
+  #    ]
+  #  )
+  # end
+
   def update_team_params
     params.require(:team).permit(
       :name, :description, members_attributes: [:name, :age, :mail, :_destroy, :id])
   end
+  # def update_team_params
+  #  params.require(:team).permit(
+  #    :name, :description,
+  #    members_attributes: [
+  #      :target_type,
+  #      target_attributes: [:name, :age, :mail, :_destroy, :id]
+  #    ]
+  #  )
+  # end
 end
