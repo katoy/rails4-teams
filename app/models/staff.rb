@@ -2,4 +2,6 @@
 class Staff < ActiveRecord::Base
   has_many :members, as: :target
   has_one :jobkind, as: :jobkindable
+
+  validates :skill, presence: true
 end

@@ -33,9 +33,10 @@
             m_id = m.object.id
             if m_id
               member = Member.find(m_id)
-              name = member.target.person.name
-              age = member.target.person.age
-              mail = member.target.person.mail
+              person = member.target.jobkind.person
+              name = person.name
+              age = person.age
+              mail = person.mail
             end
           %>
           <tr>
