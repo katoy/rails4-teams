@@ -328,6 +328,14 @@ Jobkind Load (0.6ms)  SELECT "jobkinds".* FROM "jobkinds" WHERE "jobkinds"."pers
 ( この実行時は SQLは発行されずに処理される)
 ``````````````````
 
+``````````````````
+> people = Person.joins(:jobkinds).where("jobkinds.jobkindable_type = ?", "Staff")
+  Person Load (0.2ms)  SELECT "people".* FROM "people" INNER JOIN "jobkinds" ON "jobkinds"."person_id" = "people"."id" WHERE (jobkinds.jobkindable_type = 'Staff')  ORDER BY "people"."created_at" ASC
+
+> people = Person.includes(:jobkinds).references(:jobkinds).where("jobkinds.jobkindable_type = ?", "Staff")
+  SQL (0.5ms)  SELECT "people"."id" AS t0_r0, "people"."name" AS t0_r1, "people"."age" AS t0_r2, "people"."mail" AS t0_r3, "people"."created_at" AS t0_r4, "people"."updated_at" AS t0_r5, "jobkinds"."id" AS t1_r0, "jobkinds"."jobkindable_type" AS t1_r1, "jobkinds"."jobkindable_id" AS t1_r2, "jobkinds"."person_id" AS t1_r3, "jobkinds"."created_at" AS t1_r4, "jobkinds"."updated_at" AS t1_r5 FROM "people" LEFT OUTER JOIN "jobkinds" ON "jobkinds"."person_id" = "people"."id" WHERE (jobkinds.jobkindable_type = 'Staff')  ORDER BY "people"."created_at" ASC
+``````````````````
+
 See
 ===
 * http://qiita.com/shizuma/items/6f56ca442111ece021b5
