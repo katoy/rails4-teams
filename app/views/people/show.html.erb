@@ -1,0 +1,49 @@
+<div>メンバー詳細</div>
+
+<table class="table table-hover table-condensed table-striped table-bordered">
+  <tr>
+    <td class="col-sm text-nowrap">職種</td>
+    <td>
+      <% @person.jobkinds.each do |jobkind| %>
+        <% opt = ''
+          jk = jobkind.jobkindable
+          opt = jk.lang  if jobkind.jobkindable_type == 'Developer'
+          opt = jk.skill if jobkind.jobkindable_type == 'Staff'
+        %>
+        <%= jobkind.jobkindable_type_text %> (<%= opt %>)
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td class="col-sm text-nowrap">名前</td>
+    <td><%= @person.name %></td>
+  </tr>
+  <tr>
+    <td class="col-sm text-nowrap">年齢</td>
+    <td><%= @person.age %></td>
+  </tr>
+  <tr>
+    <td class="col-sm text-nowrap">メール</td>
+    <td><%= @person.mail %></td>
+  </tr>
+  <tr>
+    <td class="col-sm text-nowrap">フォロー</td>
+    <td>
+      <% @following.each do |follow| %>
+        <%= follow.name %><br>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td class="col-sm text-nowrap">フォロワー</td>
+    <td>
+      <% @followers.each do |follower| %>
+        <%= follower.name %><br>
+      <% end %>
+    </td>
+  </tr>
+</table>
+
+
+<div><%= link_to 'メンバー一覧に戻る', people_path %></div>
+<div><%= link_to '一覧に戻る', root_path %></div>

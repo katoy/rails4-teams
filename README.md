@@ -287,6 +287,47 @@ $ rails
 }
 ``````````````````
 
+## 検索
+
+People から Staff を検索する
+``````````````````
+> Person.joins(:jobkinds).where("jobkinds.jobkindable_type =?", "Staff")
+  Person Load (0.2ms)  SELECT "people".* FROM "people" INNER JOIN "jobkinds" ON "jobkinds"."person_id" = "people"."id" WHERE (jobkinds.jobkindable_type ='Staff')  ORDER BY "people"."created_at" ASC
++----+-------+-----+-------------------+-------------------------+-------------------------+
+| id | name  | age | mail              | created_at              | updated_at              |
++----+-------+-----+-------------------+-------------------------+-------------------------+
+| 1  | Abe   | 30  | abe@example.com   | 2015-12-20 07:54:27 UTC | 2015-12-20 07:54:27 UTC |
+| 2  | Inoue | 40  | inoue@example.com | 2015-12-20 07:54:27 UTC | 2015-12-20 07:54:27 UTC |
++----+-------+-----+-------------------+-------------------------+-------------------------+
+``````````````````
+
+Person の Jobkind を列挙する
+時間がかかる方法
+``````````````````
+> people = Person.all
+  Person Load (0.3ms)  SELECT "people".* FROM "people"  ORDER BY "people"."created_at" ASC
+
+> people.each {|person| p person.jobkinds}
+Jobkind Load (23.2ms)  SELECT "jobkinds".* FROM "jobkinds" WHERE "jobkinds"."person_id" = ?  ORDER BY "jobkinds"."created_at" ASC  [["person_id", 1]]
+#<ActiveRecord::Associations::CollectionProxy [#<Jobkind id: 1, jobkindable_type: "Staff", jobkindable_id: 1, person_id: 1, created_at: "2015-12-20 07:54:27", updated_at: "2015-12-20 07:54:27">]>
+Jobkind Load (0.1ms)  SELECT "jobkinds".* FROM "jobkinds" WHERE "jobkinds"."person_id" = ?  ORDER BY "jobkinds"."created_at" ASC  [["person_id", 2]]
+#<ActiveRecord::Associations::CollectionProxy [#<Jobkind id: 2, jobkindable_type: "Staff", jobkindable_id: 2, person_id: 2, created_at: "2015-12-20 07:54:27", updated_at: "2015-12-20 07:54:27">]>
+Jobkind Load (0.2ms)  SELECT "jobkinds".* FROM "jobkinds" WHERE "jobkinds"."person_id" = ?  ORDER BY "jobkinds"."created_at" ASC  [["person_id", 3]]
+#<ActiveRecord::Associations::CollectionProxy [#<Jobkind id: 3, jobkindable_type: "Developer", jobkindable_id: 1, person_id: 3, created_at: "2015-12-20 07:54:27", updated_at: "2015-12-20 07:54:27">]>
+Jobkind Load (0.1ms)  SELECT "jobkinds".* FROM "jobkinds" WHERE "jobkinds"."person_id" = ?  ORDER BY "jobkinds"."created_at" ASC  [["person_id", 4]]
+#<ActiveRecord::Associations::CollectionProxy [#<Jobkind id: 4, jobkindable_type: "Developer", jobkindable_id: 2, person_id: 4, created_at: "2015-12-20 07:54:28", updated_at: "2015-12-20 07:54:28">]>
+``````````````````
+
+改善した方法
+``````````````````
+> people = Person.all.includes(:jobkinds)
+Person Load (31.2ms)  SELECT "people".* FROM "people"  ORDER BY "people"."created_at" ASC
+Jobkind Load (0.6ms)  SELECT "jobkinds".* FROM "jobkinds" WHERE "jobkinds"."person_id" IN (1, 2, 3, 4)  ORDER BY "jobkinds"."created_at" ASC
+
+> people.each {|person| p person.jobkinds}
+( この実行時は SQLは発行されずに処理される)
+``````````````````
+
 See
 ===
 * http://qiita.com/shizuma/items/6f56ca442111ece021b5

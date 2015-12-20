@@ -1,0 +1,31 @@
+<% if @people.count == 0 %>
+
+<% else %>
+  <table class="col-sm-12 table table-hover table-condensed table-striped table-bordered">
+    <tr>
+      <th>No.</th><th>業種</th><th>名前</th><th>年齢</th><th>メール</th><th>フォロー/フォローワ</th>
+    </tr>
+    <%- @people.each_with_index do |person, idx| -%>
+      <tr>
+        <td><%= idx + 1 %></td>
+        <td>
+          <%
+            opt = ''
+            person.jobkinds.each do |jobkind|
+              jk = jobkind.jobkindable
+              opt = jk.lang  if jobkind.jobkindable_type == 'Developer'
+              opt = jk.skill if jobkind.jobkindable_type == 'Staff'
+          %>
+            <%= jobkind.jobkindable_type_text %> (<%= opt %>)<br>
+          <% end %>
+        </td>
+        <td><a href='<%= "people/#{person.id}"%>'><%= person.name %></a></td>
+        <td><%= person.age %></td>
+        <td><%= person.mail %></td>
+        <td><%= person.following.count %> / <%= person.followers.count %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+<div><%= link_to 'メンバーを追加する', new_person_path %> 未実装</div>
+<div><%= link_to '一覧に戻る', root_path %></div>
