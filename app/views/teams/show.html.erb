@@ -16,11 +16,15 @@
            opt = member.target.lang  if member.target_type == 'Developer'
            opt = member.target.skill if member.target_type == 'Staff'
         %>
+        <% target = member.target
+           jobkind = target.jobkind
+           person = jobkind.person
+        %>
         <td class="text-right col-sm"><%= idx + 1 %></td>
-        <td><%= member.target_type_text %> (<%= opt %>)</td>
-        <td><%= member.name %></td>
-        <td class="text-right col-sm"><%= member.age %></td>
-        <td><%= member.mail %></td>
+        <td><%= member.target_type %> (<%= opt %>)</td>
+        <td><%= person.name %></td>
+        <td class="text-right col-sm"><%= person.age %></td>
+        <td><%= person.mail %></td>
       </tr>
   <%- end -%>
   </table>

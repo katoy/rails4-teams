@@ -14,10 +14,15 @@ Gemfile を編集して、幾つかの gem を追加する。
     $ bundle install
     $ rails g model team
     $ rails g model member
+    $ rails g model staff
+    $ rails g model developer
+    $ rails g model person
 
-db/migrates 以下を編集して team, member の DB 構造を記載する。
+db/migrates 以下を編集して team, member, staff, developer, person の DB 構造を記載する。
 
-team 1: <-> n: member の１対ｎの関係も db/migrate/*, app/models/* で設定する。
+person の複数形は people であることに注意する ( "person".pluralize => "people")
+
+１対ｎの関係も db/migrate/*, app/models/* で設定する。
 
 また、  
 　　チームは必ず１人以上のメンバーが属している事  
@@ -35,49 +40,72 @@ db/seed.rb で次の関係のデータを設定する。
     $ bundle exec rake db:drop
     $ bundle exec rake db:reset
     $ rails c
-    [1] pry(main)>
-    [2] pry(main)> Team.all
-    Team Load (2.2ms)  SELECT "teams".* FROM "teams"
-    +----+--------+-------------+-------------------------+-------------------------+
-    | id | name   | description | created_at              | updated_at              |
-    +----+--------+-------------+-------------------------+-------------------------+
-    | 1  | Team A |             | 2015-12-12 00:08:41 UTC | 2015-12-12 00:08:41 UTC |
-    | 2  | Team B |             | 2015-12-12 00:08:41 UTC | 2015-12-12 00:08:41 UTC |
-    +----+--------+-------------+-------------------------+-------------------------+
+    [1] pry(main)> Team.all
+    Team Load (3.0ms)  SELECT "teams".* FROM "teams"  ORDER BY "teams"."name" ASC
+    +----+--------+-----------------+-------------------------+-------------------------+
+    | id | name   | description     | created_at              | updated_at              |
+    +----+--------+-----------------+-------------------------+-------------------------+
+    | 1  | Team A | In China        | 2015-12-20 03:53:36 UTC | 2015-12-20 03:53:36 UTC |
+    | 2  | Team B | In Tokyo, japan | 2015-12-20 03:53:36 UTC | 2015-12-20 03:53:36 UTC |
+    +----+--------+-----------------+-------------------------+-------------------------+
     2 rows in set
 
-    [3] pry(main)> Member.all
-    Member Load (0.2ms)  SELECT "members".* FROM "members"
-    +----+------+-----+-------------------+---------+-------------------------+-------------------------+
-    | id | name | age | mail              | team_id | created_at              | updated_at              |
-    +----+-------+-----+-------------------+---------+-------------------------+-------------------------+
-    | 1  | Abe   | 30  | abe@example.com   | 1       | 2015-12-12 00:08:41 UTC | 2015-12-12 00:08:41 UTC |
-    | 2  | Inoue | 40  | inoue@example.com | 1       | 2015-12-12 00:08:41 UTC | 2015-12-12 00:08:41 UTC |
-    | 3  | Kato  | 30  | kato@example.com  | 2       | 2015-12-12 00:08:41 UTC | 2015-12-12 00:08:41 UTC |
-    +----+-------+-----+-------------------+---------+-------------------------+-------------------------+
-    3 rows in set
+    [2] pry(main)> Member.all
+    Member Load (0.2ms)  SELECT "members".* FROM "members"  ORDER BY "members"."created_at" ASC
+    +----+-------------+-----------+---------+-------------------------+-------------------------+
+    | id | target_type | target_id | team_id | created_at              | updated_at              |
+    +----+-------------+-----------+---------+-------------------------+-------------------------+
+    | 1  | Staff       | 1         | 1       | 2015-12-20 03:53:36 UTC | 2015-12-20 03:53:36 UTC |
+    | 2  | Developer   | 1         | 1       | 2015-12-20 03:53:36 UTC | 2015-12-20 03:53:36 UTC |
+    | 3  | Staff       | 1         | 2       | 2015-12-20 03:53:36 UTC | 2015-12-20 03:53:36 UTC |
+    | 4  | Staff       | 2         | 2       | 2015-12-20 03:53:36 UTC | 2015-12-20 03:53:36 UTC |
+    | 5  | Developer   | 1         | 2       | 2015-12-20 03:53:36 UTC | 2015-12-20 03:53:36 UTC |
+    | 6  | Developer   | 2         | 2       | 2015-12-20 03:53:36 UTC | 2015-12-20 03:53:36 UTC |
+    +----+-------------+-----------+---------+-------------------------+-------------------------+
+    6 rows in set
 
-    [4] pry(main)> Team.find(1).members
-    Team Load (0.2ms)  SELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT 1  [["id", 1]]
-    Member Load (0.2ms)  SELECT "members".* FROM "members" WHERE "members"."team_id" = ?  [["team_id", 1]]
-    +----+-------+-----+-------------------+---------+-------------------------+-------------------------+
-    | id | name  | age | mail              | team_id | created_at              | updated_at              |
-    +----+-------+-----+-------------------+---------+-------------------------+-------------------------+
-    | 1  | Abe   | 30  | abe@example.com   | 1       | 2015-12-12 00:08:41 UTC | 2015-12-12 00:08:41 UTC |
-    | 2  | Inoue | 40  | inoue@example.com | 1       | 2015-12-12 00:08:41 UTC | 2015-12-12 00:08:41 UTC |
-    +----+-------+-----+-------------------+---------+-------------------------+-------------------------+
+    [3] pry(main)> Person.all
+    Person Load (0.2ms)  SELECT "people".* FROM "people"  ORDER BY "people"."created_at" ASC
+    +----+-------+-----+-------------------+-------------------------+-------------------------+
+    | id | name  | age | mail              | created_at              | updated_at              |
+    +----+-------+-----+-------------------+-------------------------+-------------------------+
+    | 1  | Abe   | 30  | abe@example.com   | 2015-12-20 03:53:35 UTC | 2015-12-20 03:53:35 UTC |
+    | 2  | Inoue | 40  | inoue@example.com | 2015-12-20 03:53:35 UTC | 2015-12-20 03:53:35 UTC |
+    | 3  | Matu  | 30  | matu@example.com  | 2015-12-20 03:53:35 UTC | 2015-12-20 03:53:35 UTC |
+    | 4  | Duku  | 30  | duku@example.com  | 2015-12-20 03:53:35 UTC | 2015-12-20 03:53:35 UTC |
+    +----+-------+-----+-------------------+-------------------------+-------------------------+
+    4 rows in set
+
+    [4] pry(main)> Jobkind.all
+    Jobkind Load (0.2ms)  SELECT "jobkinds".* FROM "jobkinds"  ORDER BY "jobkinds"."created_at" ASC
+    +----+------------------+----------------+-----------+-------------------------+-------------------------+
+    | id | jobkindable_type | jobkindable_id | person_id | created_at              | updated_at              |
+    +----+------------------+----------------+-----------+-------------------------+-------------------------+
+    | 1  | Staff            | 1              | 1         | 2015-12-20 03:53:36 UTC | 2015-12-20 03:53:36 UTC |
+    | 2  | Staff            | 2              | 2         | 2015-12-20 03:53:36 UTC | 2015-12-20 03:53:36 UTC |
+    | 3  | Developer        | 1              | 3         | 2015-12-20 03:53:36 UTC | 2015-12-20 03:53:36 UTC |
+    | 4  | Developer        | 2              | 4         | 2015-12-20 03:53:36 UTC | 2015-12-20 03:53:36 UTC |
+    +----+------------------+----------------+-----------+-------------------------+-------------------------+
+    4 rows in set
+
+    [5] pry(main)> Staff.all
+    Staff Load (0.2ms)  SELECT "staffs".* FROM "staffs"
+    +----+----------+-------------------------+-------------------------+
+    | id | skill    | created_at              | updated_at              |
+    +----+----------+-------------------------+-------------------------+
+    | 1  | 経理     | 2015-12-20 03:53:35 UTC | 2015-12-20 03:53:35 UTC |
+    | 2  | 事務処理 | 2015-12-20 03:53:36 UTC | 2015-12-20 03:53:36 UTC |
+    +----+----------+-------------------------+-------------------------+
+
+    [6] pry(main)> Developer.all
+    Developer Load (0.3ms)  SELECT "developers".* FROM "developers"
+    +----+------+-------------------------+-------------------------+
+    | id | lang | created_at              | updated_at              |
+    +----+------+-------------------------+-------------------------+
+    | 1  | ruby | 2015-12-20 03:53:36 UTC | 2015-12-20 03:53:36 UTC |
+    | 2  | java | 2015-12-20 03:53:36 UTC | 2015-12-20 03:53:36 UTC |
+    +----+------+-------------------------+-------------------------+
     2 rows in set
-
-    [5] pry(main)> Team.find(2).members
-    Team Load (0.1ms)  SELECT  "teams".* FROM "teams" WHERE "teams"."id" = ? LIMIT 1  [["id", 2]]
-    Member Load (0.1ms)  SELECT "members".* FROM "members" WHERE "members"."team_id" = ?  [["team_id", 2]]
-    +----+------+-----+------------------+---------+-------------------------+-------------------------+
-    | id | name | age | mail             | team_id | created_at              | updated_at              |
-    +----+------+-----+------------------+---------+-------------------------+-------------------------+
-    | 3  | Kato | 30  | kato@example.com | 2       | 2015-12-12 00:08:41 UTC | 2015-12-12 00:08:41 UTC |
-    +----+------+-----+------------------+---------+-------------------------+-------------------------+
-    1 row in set
-    [6] pry(main)>
 
 
 ER図を生成する。
@@ -130,6 +158,134 @@ app/assets/javascripts/teams.coffee を作成する。
 * 001 ![001](screenshots/001.png)
 * 002 ![002](screenshots/002.png)
 * 003 ![003](screenshots/003.png)
+
+
+# REST API の作成
+
+## url
+
+http://localhost:3000/api/v1/teams (GET)
+
+http://localhost:3000/api/v1/people (GET)
+
+
+## コンソールでJbuilderの動作を確認
+
+````````````````
+$ rails
+
+> @teams = Team.all
+> str = Jbuilder.encode do |json|
+    json.array!(@teams) do |team|
+    json.name team.name
+      json.id team.id
+    end
+  end
+> jj JSON.parse(str)
+[
+  {
+    "name": "Team A",
+    "id": 1
+  },
+  {
+    "name": "Team B",
+    "id": 2
+  }
+]
+``````````````````
+
+コンソールでは jjson.partial! がなぜか動作しない。  
+次のようにして確認できる。
+``````````````````
+> view = ApplicationController.view_context_class.new("#{Rails.root}/app/views");''
+> jj JbuilderTemplate.new(view).encode { |json| json.partial! 'api/v1/shared/team', team: @teams[0] }
+{
+  "team": {
+    "id": 1,
+    "name": "Team A",
+    "members": [
+      {
+        "staff": {
+          "id": 1,
+          "skill": "経理",
+          "jobkind": {
+            "id": 1,
+            "person": {
+              "id": 1,
+              "name": "Abe",
+              "age": 30,
+              "mail": "abe@example.com"
+            }
+          }
+        }
+      },
+      {
+        "developer": {
+          "id": 1,
+          "lang": "ruby",
+          "jobkind": {
+            "id": 3,
+            "person": {
+              "id": 3,
+              "name": "Matu",
+              "age": 30,
+              "mail": "matu@example.com"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
+``````````````````
+
+``````````````````
+> builder = JbuilderTemplate.new(ApplicationController.new.view_context)
+> builder.partial!("api/v1/shared/team.json.jbuilder", team: @teams[0])
+> str = builder.target!
+> jj JSON.parse(str)
+{
+  "respond_to?": "to_a",
+  "is_a?": {
+  },
+  "team": {
+    "id": 1,
+    "name": "Team A",
+    "members": [
+      {
+        "staff": {
+          "id": 1,
+          "skill": "経理",
+          "jobkind": {
+            "id": 1,
+            "person": {
+              "id": 1,
+              "name": "Abe",
+              "age": 30,
+              "mail": "abe@example.com"
+            }
+          }
+        }
+      },
+      {
+        "developer": {
+          "id": 1,
+          "lang": "ruby",
+          "jobkind": {
+            "id": 3,
+            "person": {
+              "id": 3,
+              "name": "Matu",
+              "age": 30,
+              "mail": "matu@example.com"
+            }
+          }
+        }
+      }
+    ]
+  }
+}
+``````````````````
 
 See
 ===

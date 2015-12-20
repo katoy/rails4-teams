@@ -31,4 +31,4 @@ ja:
     member:
       target_type:
         Staff: 'スタッフ'
-        Development: '研究開発'
+        Developer: '研究開発'

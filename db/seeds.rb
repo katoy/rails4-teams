@@ -16,22 +16,46 @@ Developer.delete_all
 # team.save!
 # team.members.create!(name: 'Abe', age: 30, mail: 'abe@example.com')
 # team.members.create!(name: 'Inoue', age: 40, mail: 'inoue@example.com')
+Person.create!([
+  { name: 'Abe', age: 30, mail: 'abe@example.com' },
+  { name: 'Inoue', age: 40, mail: 'inoue@example.com' },
+  { name: 'Matu', age: 30, mail: 'matu@example.com' },
+  { name: 'Duku', age: 30, mail: 'duku@example.com' }
+])
+
+per = Person.where(mail: 'abe@example.com').first
+staff1 = Staff.create!(skill: '経理')
+jk = staff1.build_jobkind(jobkindable_type: 'Staff', jobkindable_id: staff1.id)
+jk.person = per
+jk = per.jobkinds.create!(jobkindable_type: jk.jobkindable_type, jobkindable_id: jk.jobkindable_id)
+jk.person = per
+
+per = Person.where(mail: 'inoue@example.com').first
+staff2 = Staff.create!(skill: '事務処理')
+jk = staff2.build_jobkind(jobkindable_type: 'Staff', jobkindable_id: staff2.id)
+jk.person = per
+per.jobkinds.create!(jobkindable_type: jk.jobkindable_type, jobkindable_id: jk.jobkindable_id)
+
+per = Person.where(mail: 'matu@example.com').first
+developer1 = Developer.create!(lang: 'ruby')
+jk = developer1.build_jobkind(jobkindable_type: 'Developer', jobkindable_id: developer1.id)
+jk.person = per
+per.jobkinds.create!(jobkindable_type: jk.jobkindable_type, jobkindable_id: jk.jobkindable_id)
+
+per = Person.where(mail: 'duku@example.com').first
+developer2 = Developer.create!(lang: 'java')
+jk = developer2.build_jobkind(jobkindable_type: 'Developer', jobkindable_id: developer2.id)
+jk.person = per
+per.jobkinds.create!(jobkindable_type: jk.jobkindable_type, jobkindable_id: jk.jobkindable_id)
 
 team = Team.new(name: 'Team A', description: 'In China')
 team.save!(validate: false)
-s1 = Staff.create(skill: 'account')
-team.members << s1.members.create(name: 'Abe', age: 30, mail: 'abe@example.com')
-d1 = Developer.create(lang: 'ruby')
-team.members << d1.members.create(
-  name: 'Inoue', age: 40, mail: 'inoue@example.com'
-)
+team.members.create!(target_id: staff1.id, target_type: 'Staff')
+team.members.create!(target_id: developer1.id, target_type: 'Developer')
 
 team = Team.new(name: 'Team B', description: 'In Tokyo, japan')
 team.save!(validate: false)
-s1 = Staff.new(skill: 'account')
-team.members << s1.members.build(
-  name: 'Kato', age: 30, mail: 'kato@example.com'
-)
-s1.save!
-# team.members << s1.members
-team.save!
+team.members.create!(target_id: staff1.id, target_type: 'Staff')
+team.members.create!(target_id: staff2.id, target_type: 'Staff')
+team.members.create!(target_id: developer1.id, target_type: 'Developer')
+team.members.create!(target_id: developer2.id, target_type: 'Developer')

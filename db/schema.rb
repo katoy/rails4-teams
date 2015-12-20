@@ -19,10 +19,18 @@ ActiveRecord::Schema.define(version: 20151213211325) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "jobkinds", force: :cascade do |t|
+    t.string   "jobkindable_type"
+    t.integer  "jobkindable_id"
+    t.integer  "person_id"
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
+  end
+
+  add_index "jobkinds", ["jobkindable_id", "created_at"], name: "index_jobkinds_on_jobkindable_id_and_created_at"
+  add_index "jobkinds", ["jobkindable_id", "jobkindable_type"], name: "index_jobkinds_on_jobkindable_id_and_jobkindable_type"
+
   create_table "members", force: :cascade do |t|
-    t.string   "name",        null: false
-    t.integer  "age",         null: false
-    t.string   "mail"
     t.string   "target_type"
     t.integer  "target_id"
     t.integer  "team_id"
@@ -30,9 +38,16 @@ ActiveRecord::Schema.define(version: 20151213211325) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "members", ["mail"], name: "index_members_on_mail", unique: true
   add_index "members", ["target_id", "target_type"], name: "index_members_on_target_id_and_target_type"
   add_index "members", ["team_id", "created_at"], name: "index_members_on_team_id_and_created_at"
+
+  create_table "people", force: :cascade do |t|
+    t.string   "name",       null: false
+    t.integer  "age",        null: false
+    t.string   "mail"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "staffs", force: :cascade do |t|
     t.string   "skill"

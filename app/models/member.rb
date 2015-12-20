@@ -1,6 +1,5 @@
 # Member team 1:<->:n member
 class Member < ActiveRecord::Base
-
   extend Enumerize
 
   enumerize :target_type, in: [:Developer, :Staff]
@@ -12,7 +11,4 @@ class Member < ActiveRecord::Base
   default_scope -> { order(created_at: :asc) }
 
   # validates :team_id, presence: true
-  validates :name, presence: true
-  validates :age, presence: true
-  validates :mail, presence: true
 end

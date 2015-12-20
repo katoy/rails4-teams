@@ -18,13 +18,14 @@
           <% opt = ''
              opt = m.target.lang  if m.target_type == 'Developer'
              opt = m.target.skill if m.target_type == 'Staff'
+             person = m.target.jobkind.person
           %>
           <td></td>
           <td><%= idx + 1 %></td>
           <td><%= m.target_type_text %> (<%= opt %>)</td>
-          <td><%= m.name %></td>
-          <td><%= m.age %></td>
-          <td><%= m.mail %></td>
+          <td><%= person.name %></td>
+          <td><%= person.age %></td>
+          <td><%= person.mail %></td>
         </tr>
       <%- end %>
     <%- end -%>

@@ -13,24 +13,38 @@
     </div>
   </div>
   <div class='form-group form-group-sm''>
-    <label class='control-label col-sm-2' %>メンバー</label>
+    <label class='control-label col-sm-2'>メンバー</label>
     <div id='team_members_box' class='control-label col-sm-10'>
       <table id="members-table" class="col-sm-12 table table-hover table-condensed table-striped table-bordered">
+        <tr>
+          <th class="control-label col-sm">No.</th>
+          <th class="control-label col-sm">ID</th>
+          <th class="control-label col-sm">職種</th>
+          <th class="control-label col-sm">名前</th>
+          <th class="control-label col-sm">年齢</th>
+          <th class="control-label col-sm">メール</th>
+          <th class="control-label col-sm"></th>
+        </tr>
         <%= f.fields_for :members do |m| %>
-          <% if m.index == 0 %>
-            <tr>
-              <th class="control-label col-sm">No.</th>
-              <th><%= m.label :name, class: 'control-label col-sm'%></th>
-              <th><%= m.label :age,  class: 'control-label col-sm'%></th>
-              <th><%= m.label :mail, class: 'control-label col-sm'%></th>
-              <th class="control-label col-sm"></th>
-            </tr>
-          <% end %>
+          <%
+            name = ''
+            age = ''
+            mail = ''
+            m_id = m.object.id
+            if m_id
+              member = Member.find(m_id)
+              name = member.target.person.name
+              age = member.target.person.age
+              mail = member.target.person.mail
+            end
+          %>
           <tr>
-            <td class="js-team_member" id="add_member_#{m.index}"><%= m.index + 1%></td>
-            <td><%= m.text_field :name, placeholder: '名前', required: true, class: 'form-control input-sm' %></td>
-            <td><%= m.text_field :age,  placeholder: '年齢', required: true, class: 'form-control input-sm' %></td>
-            <td><%= m.text_field :mail, placeholder: 'foo@example.com', required: true, class: 'form-control input-sm' %></td>
+            <td class="js-team_member" id="add_member_#{m.index}"><%= m.index + 1 %></td>
+            <td><%= m.text_field :target_id, placeholder: 'id', required: true, class: 'form-control input-sm' %></td>
+            <td><%= m.text_field :target_type, placeholder: 'type', required: true, class: 'form-control input-sm' %></td>
+            <td><%= name %></td>
+            <td><%= age %></td>
+            <td><%= mail %></td>
             <td><%= m.check_box:_destroy %>削除</td>
           </tr>
         <% end %>

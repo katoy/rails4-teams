@@ -1,3 +1,4 @@
+# coding: utf-8
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -68,6 +69,7 @@ group :development, :test do
   gem 'tapp'
   gem 'awesome_print'
   gem 'rails-erd'
+  # gem 'pry-remote'
 end
 
 group :development, :test do

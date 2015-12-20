@@ -1,3 +1,4 @@
+# coding: utf-8
 # Teams
 class TeamsController < ApplicationController
   def index
@@ -36,7 +37,6 @@ class TeamsController < ApplicationController
     if @team.update!(update_team_params)
       redirect_to edit # root_path
     else
-
       render :edit
     end
   rescue => ex
@@ -56,7 +56,7 @@ class TeamsController < ApplicationController
 
   def team_params
     params.require(:team).permit(
-      :name, :description, members_attributes: [:name, :age, :mail]
+      :name, :description, members_attributes: [:target_type, :target_id]
     )
   end
 
@@ -73,7 +73,7 @@ class TeamsController < ApplicationController
 
   def update_team_params
     params.require(:team).permit(
-      :name, :description, members_attributes: [:name, :age, :mail, :_destroy, :id])
+      :name, :description, members_attributes: [:target_type, :target_id, :_destroy, :id])
   end
   # def update_team_params
   #  params.require(:team).permit(
