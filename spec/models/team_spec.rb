@@ -17,7 +17,7 @@ RSpec.describe Team, :type => :model do
 
   it 'should be valid if team has one member' do
     @team.save!(validate: false)
-    @team.members.create(name: 'team_x1_m', age: 20, mail: 'team_x1_m@com')
+    @team.members.create(target_type: 'Staff', target_id: 1)
     expect(@team.members.count).to eq(1)
     expect(@team.valid?).to eq(true)
   end
@@ -27,7 +27,7 @@ RSpec.describe Team, :type => :model do
     expect(@team.members.count).to eq(0)
     expect(@team.valid?).to eq(false)
 
-    @team.members.create(name: 'team_x1_m', age: 20, mail: 'team_x1_m@com')
+    @team.members.create(target_type: 'Staff', target_id: 1)
     expect(@team.members.count).to eq(1)
     expect(@team.valid?).to eq(true)
   end
