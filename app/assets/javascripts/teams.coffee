@@ -4,12 +4,10 @@ $ ->
     input = '<div class="js-team_member" id="add_member_' +
     member_num +
     '">' +
-    '<input placeholder="名前" type="text" name="team[members_attributes][' +
-    member_num + '][name]" id="team_members_attributes_' + member_num + '_name" required>' +
-    '<input placeholder="年齢" type="text" name="team[members_attributes][' +
-    member_num + '][age]" id="team_members_attributes_' + member_num + '_age" required>' +
-    '<input placeholder="メールアドレス" type="text" name="team[members_attributes][' +
-    member_num + '][mail]" id="team_members_attributes_' + member_num + '_mail" required>' +
+    '<input placeholder="ID" type="text" name="team[members_attributes][' +
+    member_num + '][target_id]" id="team_members_attributes_' + member_num + '_taget_id" required>' +
+    '<input placeholder="職種" type="text" name="team[members_attributes][' +
+    member_num + '][target_type]" id="team_members_attributes_' + member_num + '_target_type" required>' +
     '<button class="member_delete" data-id="' + member_num + '">' + '削除' + '</button>' + '</div>'
     $('#team_members_box').append input
     member_num++

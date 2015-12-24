@@ -42,7 +42,7 @@
           <tr>
             <td class="js-team_member" id="add_member_#{m.index}"><%= m.index + 1 %></td>
             <td><%= m.text_field :target_id, placeholder: 'id', required: true, class: 'form-control input-sm' %></td>
-            <td><%= m.text_field :target_type, placeholder: 'type', required: true, class: 'form-control input-sm' %></td>
+            <td><%= m.select :target_type, [['Staff', 'Staff'], ['Developer', 'Developer']] %></td>
             <td><%= name %></td>
             <td><%= age %></td>
             <td><%= mail %></td>
