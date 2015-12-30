@@ -37,6 +37,7 @@ gem 'rails-i18n'
 gem 'therubyracer'            # javascript runtime。lessをコンパイルするために必要
 gem 'less-rails'              # Railsでlessを使えるようにする。Bootstrapがlessで書かれているため
 gem 'twitter-bootstrap-rails' # Bootstrapの本体
+gem 'sprockets-rails', '2.3.3'
 
 gem 'enumerize'
 
@@ -47,7 +48,8 @@ end
 
 group :development do
   # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
+  # gem 'web-console', '~> 2.0'
+  gem 'web-console'
 
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
