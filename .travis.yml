@@ -18,8 +18,3 @@ before_script:
 script:
   - # bundle exec rake test
   - RAILS_ENV=test bundle exec rake spec
-
-addons:
-  apt:
-    packages:
-      - silversearcher-ag

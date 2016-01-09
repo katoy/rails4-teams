@@ -38,7 +38,8 @@ db/seed.rb で次の関係のデータを設定する。
 次のようにして、DB の初期化とデータ内容をチェックする。
 
     $ bundle exec rake db:drop
-    $ bundle exec rake db:reset
+    $ bundle exec rake db:reset                       // seed.rb で初期データを投入する
+     (または bundle exec rake db:migrate db:seed:csv) // seed/csvs/*.csv で初期データを投入する
     $ rails c
     [1] pry(main)> Team.all
     Team Load (3.0ms)  SELECT "teams".* FROM "teams"  ORDER BY "teams"."name" ASC
