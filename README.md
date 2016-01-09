@@ -5,7 +5,7 @@
 
 準備
 =====
-    $ rails new teams -t
+    $ rails new teams -T
     $ cd teams
 Gemfile を編集して、幾つかの gem を追加する。
 
